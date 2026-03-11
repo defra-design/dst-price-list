@@ -1,14 +1,7 @@
 {% extends "layouts/main.html" %}
 
 {% block pageTitle %}
-  Cattle packages – {{ serviceName }} – GOV.UK Prototype Kit
-{% endblock %}
-
-{% block containerStart %}
-  {{ govukBackLink({
-    text: "Back",
-    href: "javascript:window.history.back()"
-  }) }}
+  {{ serviceName }} – GOV.UK Prototype Kit
 {% endblock %}
 
 {% block content %}
@@ -16,21 +9,20 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">{{ serviceName }}</h1>
-    <p class="govuk-body">Prices quoted in this price list apply ONLY to tests for samples from farmed animals in ENGLAND &amp; WALES submitted by private veterinary surgeons to APHA Laboratories for diagnostic purposes. To see the relevant price lists for other submissions, please see the section at the bottom of this page.</p>
-    <p class="govuk-body">To find the test(s) that you are looking for, you can either use the Search box or the Advanced Search facility at the top right of this page. Alternatively, you can search by category from the following lists. Pdf versions of your search results can be printed if required.</p>
+    <p class="govuk-body">Prices apply to diagnostic tests for farmed animals in England and Wales, submitted by private veterinary surgeons to APHA Laboratories. All prices are ex. VAT.</p>
+    <p class="govuk-body">Click on a test code for full details including sample requirements, accreditation and constituent tests.</p>
   </div>
 </div>
 
-<form method="get" action="#">
+<form method="get" action="/">
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <div class="govuk-form-group">
-        <h2 class="govuk-label-wrapper">
-          <label class="govuk-label govuk-label--m" for="search">
-            Search tests
-          </label>
-        </h2>
-        <input class="govuk-input govuk-!-width-three-quarters" id="search" name="search" type="search" placeholder="For example, Bovine respiratory, PC0387">
+        <label class="govuk-label govuk-label--m" for="search">Search tests</label>
+        <input class="govuk-input govuk-!-width-three-quarters" id="search" name="search" type="search"
+          value="{{ query.search }}"
+          placeholder="For example, Bovine respiratory, PC0387">
         <button class="govuk-button" data-module="govuk-button">Search</button>
       </div>
     </div>
@@ -46,35 +38,30 @@
         <div class="govuk-details__text">
 
           <div class="govuk-grid-row">
+
             <div class="govuk-grid-column-one-quarter">
               <div class="govuk-form-group">
                 <fieldset class="govuk-fieldset">
                   <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Species</legend>
                   <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="species-cattle" name="species" type="checkbox" value="cattle">
-                      <label class="govuk-label govuk-checkboxes__label" for="species-cattle">Cattle</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="species-sheep-goat" name="species" type="checkbox" value="sheep-goat">
-                      <label class="govuk-label govuk-checkboxes__label" for="species-sheep-goat">Sheep / Goat</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="species-pig" name="species" type="checkbox" value="pig">
-                      <label class="govuk-label govuk-checkboxes__label" for="species-pig">Pig</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="species-equine" name="species" type="checkbox" value="equine">
-                      <label class="govuk-label govuk-checkboxes__label" for="species-equine">Equine</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="species-avian" name="species" type="checkbox" value="avian">
-                      <label class="govuk-label govuk-checkboxes__label" for="species-avian">Avian</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="species-other" name="species" type="checkbox" value="other">
-                      <label class="govuk-label govuk-checkboxes__label" for="species-other">Other species</label>
-                    </div>
+                    {% set speciesOptions = [
+                      { value: "Cattle",   label: "Cattle" },
+                      { value: "Sheep",    label: "Sheep / Goat" },
+                      { value: "Pig",      label: "Pig" },
+                      { value: "Equine",   label: "Equine" },
+                      { value: "Birds",    label: "Avian" },
+                      { value: "Camelid",  label: "Camelid" }
+                    ] %}
+                    {% for opt in speciesOptions %}
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input"
+                          id="species-{{ opt.value | lower }}"
+                          name="species" type="checkbox" value="{{ opt.value }}"
+                          {% if query.species and opt.value in query.species %}checked{% endif %}>
+                        <label class="govuk-label govuk-checkboxes__label"
+                          for="species-{{ opt.value | lower }}">{{ opt.label }}</label>
+                      </div>
+                    {% endfor %}
                   </div>
                 </fieldset>
               </div>
@@ -85,22 +72,25 @@
                 <fieldset class="govuk-fieldset">
                   <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Age group</legend>
                   <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="age-1-5-days" name="age" type="checkbox" value="1-5-days">
-                      <label class="govuk-label govuk-checkboxes__label" for="age-1-5-days">Calves (1–5 days)</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="age-6-21-days" name="age" type="checkbox" value="6-21-days">
-                      <label class="govuk-label govuk-checkboxes__label" for="age-6-21-days">Calves (6–21 days)</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="age-22-days-plus" name="age" type="checkbox" value="22-days-plus">
-                      <label class="govuk-label govuk-checkboxes__label" for="age-22-days-plus">Young ruminants (22+ days)</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="age-adult" name="age" type="checkbox" value="adult">
-                      <label class="govuk-label govuk-checkboxes__label" for="age-adult">Adult</label>
-                    </div>
+                    {% set ageOptions = [
+                      { value: "1–5 days",       label: "1–5 days" },
+                      { value: "6–21 days",      label: "6–21 days" },
+                      { value: "6 days–6 weeks", label: "6 days–6 weeks" },
+                      { value: "6+ weeks",       label: "6+ weeks" },
+                      { value: "22+ days",       label: "22+ days" },
+                      { value: "2+ weeks",       label: "2+ weeks" },
+                      { value: "Adult",          label: "Adult" }
+                    ] %}
+                    {% for opt in ageOptions %}
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input"
+                          id="age-{{ loop.index }}"
+                          name="age" type="checkbox" value="{{ opt.value }}"
+                          {% if query.age and opt.value in query.age %}checked{% endif %}>
+                        <label class="govuk-label govuk-checkboxes__label"
+                          for="age-{{ loop.index }}">{{ opt.label }}</label>
+                      </div>
+                    {% endfor %}
                   </div>
                 </fieldset>
               </div>
@@ -111,60 +101,32 @@
                 <fieldset class="govuk-fieldset">
                   <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Test type</legend>
                   <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="type-package" name="type" type="checkbox" value="package">
-                      <label class="govuk-label govuk-checkboxes__label" for="type-package">Package</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="type-elisa" name="type" type="checkbox" value="elisa">
-                      <label class="govuk-label govuk-checkboxes__label" for="type-elisa">ELISA</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="type-histopathology" name="type" type="checkbox" value="histopathology">
-                      <label class="govuk-label govuk-checkboxes__label" for="type-histopathology">Histopathology</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="type-serology" name="type" type="checkbox" value="serology">
-                      <label class="govuk-label govuk-checkboxes__label" for="type-serology">Serology</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="type-virology" name="type" type="checkbox" value="virology">
-                      <label class="govuk-label govuk-checkboxes__label" for="type-virology">Virology</label>
-                    </div>
+                    {% set typeOptions = [
+                      { value: "Package",        label: "Package" },
+                      { value: "ELISA",          label: "ELISA" },
+                      { value: "Histopathology", label: "Histopathology" },
+                      { value: "PME",            label: "Post mortem" },
+                      { value: "RSA Package",    label: "RSA Package" }
+                    ] %}
+                    {% for opt in typeOptions %}
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input"
+                          id="type-{{ loop.index }}"
+                          name="type" type="checkbox" value="{{ opt.value }}"
+                          {% if query.type and opt.value in query.type %}checked{% endif %}>
+                        <label class="govuk-label govuk-checkboxes__label"
+                          for="type-{{ loop.index }}">{{ opt.label }}</label>
+                      </div>
+                    {% endfor %}
                   </div>
                 </fieldset>
               </div>
             </div>
 
-            <div class="govuk-grid-column-one-quarter">
-              <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
-                  <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Category</legend>
-                  <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="cat-packages" name="category" type="checkbox" value="packages">
-                      <label class="govuk-label govuk-checkboxes__label" for="cat-packages">Packages</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="cat-serology" name="category" type="checkbox" value="serology">
-                      <label class="govuk-label govuk-checkboxes__label" for="cat-serology">Serology</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="cat-virology" name="category" type="checkbox" value="virology">
-                      <label class="govuk-label govuk-checkboxes__label" for="cat-virology">Virology</label>
-                    </div>
-                    <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="cat-other" name="category" type="checkbox" value="other">
-                      <label class="govuk-label govuk-checkboxes__label" for="cat-other">Other tests</label>
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
-            </div>
           </div>
 
           <button class="govuk-button govuk-button--secondary" data-module="govuk-button">Apply filters</button>
-          <a class="govuk-link" href="?">Clear filters</a>
+          <a class="govuk-link" href="/">Clear filters</a>
 
         </div>
       </details>
@@ -175,106 +137,43 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
-      <p class="govuk-body">Click on a test code for more detailed information.</p>
+      {% if tests.length %}
+        <p class="govuk-body">Showing {{ tests.length }} test{{ "s" if tests.length !== 1 }}.</p>
+      {% else %}
+        <p class="govuk-body">No tests match your search. <a class="govuk-link" href="/">Clear search and filters</a>.</p>
+      {% endif %}
 
-      <table class="govuk-table govuk-table--small-text-until-tablet">
-        <caption class="govuk-table__caption govuk-visually-hidden">Cattle packages price list</caption>
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Test code</th>
-            <th scope="col" class="govuk-table__header">Test description</th>
-            <th scope="col" class="govuk-table__header">Test type</th>
-            <th scope="col" class="govuk-table__header govuk-table__header--numeric">Max turnaround time (working days)</th>
-            <th scope="col" class="govuk-table__header govuk-table__header--numeric">Price per test (£) ex. VAT</th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a class="govuk-link" href="/test-detail?code=PC0387&amp;category=14">PC0387</a></td>
-            <td class="govuk-table__cell">Bovine abortion/stillbirth serology package A: Leptospira hardjo, Neospora</td>
-            <td class="govuk-table__cell">Package</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">10</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">16.50</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a class="govuk-link" href="/test-detail?code=PC0405&amp;category=14">PC0405</a></td>
-            <td class="govuk-table__cell">Bovine abortion/stillbirth serology package B: Leptospira hardjo, BVD, IBR &amp; Neospora</td>
-            <td class="govuk-table__cell">Package</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">10</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">28.30</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a class="govuk-link" href="/test-detail?code=PC0384&amp;category=14">PC0384</a></td>
-            <td class="govuk-table__cell">Bovine respiratory disease package A - viral serology: IBR, RSV, PI3 &amp; BVD</td>
-            <td class="govuk-table__cell">Package</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">10</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">31.70</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a class="govuk-link" href="/test-detail?code=PC0385&amp;category=14">PC0385</a></td>
-            <td class="govuk-table__cell">Bovine respiratory disease package B - full serology: IBR, RSV, PI3, BVD, Mycoplasma bovis &amp; Histophilus somni (H. somnus)</td>
-            <td class="govuk-table__cell">Package</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">10</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">73.70</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a class="govuk-link" href="/test-detail?code=PC0069&amp;category=14">PC0069</a></td>
-            <td class="govuk-table__cell">Enteric package 1-5 day calves: Culture for salmonellae and E. coli. with antimicrobial sensitivity profile as appropriate; examination for rota and corona viruses, cryptosporidia (5g faeces)</td>
-            <td class="govuk-table__cell">Package</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">10</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">54.10</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a class="govuk-link" href="/test-detail?code=PC0070&amp;category=14">PC0070</a></td>
-            <td class="govuk-table__cell">Enteric package 6 to 21 day calves: Salmonella culture, rota and corona virus, cryptosporidia (5g faeces)</td>
-            <td class="govuk-table__cell">Package</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">10</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">50.80</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a class="govuk-link" href="/test-detail?code=PC0073&amp;category=14">PC0073</a></td>
-            <td class="govuk-table__cell">Enteric package adult cattle: Johne's antibody ELISA on serum, fluke eggs, salmonella culture (40g faeces)</td>
-            <td class="govuk-table__cell">Package</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">10</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">45.00</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a class="govuk-link" href="/test-detail?code=PC0071&amp;category=14">PC0071</a></td>
-            <td class="govuk-table__cell">Enteric package young ruminants from 22 days: Salmonella culture, coccidia and worm egg count (10g faeces)</td>
-            <td class="govuk-table__cell">Package</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">10</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">37.70</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a class="govuk-link" href="/test-detail?code=PC0006&amp;category=14">PC0006</a></td>
-            <td class="govuk-table__cell">Histopathology package (up to 3 tissues or 3 specimens of 1 tissue)</td>
-            <td class="govuk-table__cell">Histopathology</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric"></td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">49.40</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a class="govuk-link" href="/test-detail?code=PC0126&amp;category=14">PC0126</a></td>
-            <td class="govuk-table__cell">Milk - bulk milk antibody test package: BVD, IBR and L.hardjo</td>
-            <td class="govuk-table__cell">ELISA</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">7</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">20.30</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a class="govuk-link" href="/test-detail?code=PC0636&amp;category=14">PC0636</a></td>
-            <td class="govuk-table__cell">Milk - individual milk antibody test package: BVD, IBR and L.hardjo</td>
-            <td class="govuk-table__cell">ELISA</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">7</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">17.90</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a class="govuk-link" href="/test-detail?code=PC0064&amp;category=14">PC0064</a></td>
-            <td class="govuk-table__cell">Parasite disease: Worm egg count &amp; examination for fluke eggs, coccidial oocyst count (40g faeces)</td>
-            <td class="govuk-table__cell">Package</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">5</td>
-            <td class="govuk-table__cell govuk-table__cell--numeric">39.00</td>
-          </tr>
-        </tbody>
-      </table>
+      {% if tests.length %}
+        <table class="govuk-table govuk-table--small-text-until-tablet">
+          <caption class="govuk-table__caption govuk-visually-hidden">Disease Surveillance Tests price list</caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Test code</th>
+              <th scope="col" class="govuk-table__header">Animal</th>
+              <th scope="col" class="govuk-table__header">Test</th>
+              <th scope="col" class="govuk-table__header">Clinical purpose</th>
+              <th scope="col" class="govuk-table__header">Sample type</th>
+              <th scope="col" class="govuk-table__header">Sample quantity</th>
+              <th scope="col" class="govuk-table__header govuk-table__header--numeric">Price (£) ex. VAT</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for test in tests %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  <a class="govuk-link" href="/test-detail?code={{ test.code }}">{{ test.code }}</a>
+                </td>
+                <td class="govuk-table__cell">{{ test.animal }}</td>
+                <td class="govuk-table__cell">{{ test.description }}</td>
+                <td class="govuk-table__cell">{{ test.clinicalPurpose }}</td>
+                <td class="govuk-table__cell">{{ test.sampleType }}</td>
+                <td class="govuk-table__cell">{{ test.sampleQuantity }}</td>
+                <td class="govuk-table__cell govuk-table__cell--numeric">{{ test.price }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
 
     </div>
   </div>

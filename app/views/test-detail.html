@@ -1,0 +1,116 @@
+{% extends "layouts/main.html" %}
+
+{% block pageTitle %}
+  {{ test.code }} – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
+
+{% block containerStart %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <span class="govuk-caption-l">{{ test.code }}</span>
+    <h1 class="govuk-heading-l">{{ test.description }}</h1>
+
+    <dl class="govuk-summary-list">
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Test type</dt>
+        <dd class="govuk-summary-list__value">{{ test.testType if test.testType else "—" }}</dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Animal</dt>
+        <dd class="govuk-summary-list__value">{{ test.animal if test.animal else "—" }}</dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Clinical purpose</dt>
+        <dd class="govuk-summary-list__value">{{ test.clinicalPurpose if test.clinicalPurpose else "—" }}</dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Max turnaround time</dt>
+        <dd class="govuk-summary-list__value">
+          {% if test.turnaround %}{{ test.turnaround }} working days{% else %}—{% endif %}
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Price (ex. VAT)</dt>
+        <dd class="govuk-summary-list__value">£{{ test.price }}</dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Sample type</dt>
+        <dd class="govuk-summary-list__value">{{ test.sampleType if test.sampleType else "—" }}</dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Sample quantity</dt>
+        <dd class="govuk-summary-list__value">{{ test.sampleQuantity if test.sampleQuantity else "—" }}</dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">UKAS accreditation</dt>
+        <dd class="govuk-summary-list__value">
+          {{ test.ukasAccred if test.ukasAccred else "—" }}
+          {% if test.ukasNotes %}
+            <br><span class="govuk-hint">{{ test.ukasNotes }}</span>
+          {% endif %}
+        </dd>
+      </div>
+
+      {% if test.submissionInstructions %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Submission instructions</dt>
+          <dd class="govuk-summary-list__value">{{ test.submissionInstructions }}</dd>
+        </div>
+      {% endif %}
+
+      {% if test.datasheets %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Data sheets</dt>
+          <dd class="govuk-summary-list__value">{{ test.datasheets }}</dd>
+        </div>
+      {% endif %}
+
+    </dl>
+
+    {% if test.packageNotes %}
+      <h2 class="govuk-heading-m">Package notes</h2>
+      <p class="govuk-body">{{ test.packageNotes }}</p>
+    {% endif %}
+
+    {% if test.constituentTests.length %}
+      <h2 class="govuk-heading-m">Constituent tests</h2>
+      <p class="govuk-body">This package includes the following individual tests:</p>
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Test code</th>
+            <th scope="col" class="govuk-table__header">Description</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          {% for constituent in test.constituentTests %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">{{ constituent.code }}</td>
+              <td class="govuk-table__cell">{{ constituent.name }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}
