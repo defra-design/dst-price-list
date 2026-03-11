@@ -1,0 +1,99 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">{{ serviceName }}</h1>
+    <p class="govuk-body">Prices quoted in this price list apply ONLY to tests for samples from farmed animals in ENGLAND &amp; WALES submitted by private veterinary surgeons to APHA Laboratories for diagnostic purposes. To see the relevant price lists for other submissions, please see the section at the bottom of this page.</p>
+    <p class="govuk-body">To find the test(s) that you are looking for, you can either use the Search box or the Advanced Search facility at the top right of this page. Alternatively, you can search by category from the following lists. Pdf versions of your search results can be printed if required.</p>
+
+    <h2 class="govuk-heading-m">Tests suitable for various animal species</h2>
+    <ul class="govuk-list govuk-list--spaced">
+      <li><a class="govuk-link" href="/search-results?category=1">Post Mortem Examinations</a></li>
+      <li><a class="govuk-link" href="/search-results?category=2">Histopathology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=3">Abortion / Stillbirth</a></li>
+      <li><a class="govuk-link" href="/search-results?category=4">Microbiology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=5">Feed &amp; Meat Tests</a></li>
+      <li><a class="govuk-link" href="/search-results?category=6">Milk Antibody Tests</a></li>
+      <li><a class="govuk-link" href="/search-results?category=7">Other Milk Tests</a></li>
+      <li><a class="govuk-link" href="/search-results?category=8">Dermatology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=9">Parasitology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=35">Miscellaneous Tests</a></li>
+    </ul>
+
+    <h2 class="govuk-heading-m">Tests by animal species</h2>
+
+    <h3 class="govuk-heading-s">Cattle</h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li><a class="govuk-link" href="/search-results?category=14">Packages</a></li>
+      <li><a class="govuk-link" href="/search-results?category=15">Serology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=16">Virology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=17">Other Tests</a></li>
+    </ul>
+
+    <h3 class="govuk-heading-s">Pig</h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li><a class="govuk-link" href="/search-results?category=22">Packages</a></li>
+      <li><a class="govuk-link" href="/search-results?category=23">Serology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=24">Virology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=25">Other Tests</a></li>
+    </ul>
+
+    <h3 class="govuk-heading-s">Avian</h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li><a class="govuk-link" href="/search-results?category=29">Packages</a></li>
+      <li><a class="govuk-link" href="/search-results?category=30">Serology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=31">Virology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=32">Other Tests</a></li>
+    </ul>
+
+    <h3 class="govuk-heading-s">Sheep / Goat</h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li><a class="govuk-link" href="/search-results?category=18">Packages</a></li>
+      <li><a class="govuk-link" href="/search-results?category=19">Serology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=20">Virology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=21">Other Tests</a></li>
+    </ul>
+
+    <h3 class="govuk-heading-s">Equine</h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li><a class="govuk-link" href="/search-results?category=26">Serology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=27">Virology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=28">Other Tests</a></li>
+    </ul>
+
+    <h3 class="govuk-heading-s">Other Species</h3>
+    <ul class="govuk-list govuk-list--spaced">
+      <li><a class="govuk-link" href="/search-results?category=33">Serology</a></li>
+      <li><a class="govuk-link" href="/search-results?category=34">Virology, Bacteriology &amp; Parasitology</a></li>
+    </ul>
+
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h2 class="govuk-heading-m">Other price lists</h2>
+    <p class="govuk-body">Prices for submissions not covered by the Disease Surveillance Tests price list can be found in one of the following price lists:</p>
+
+    <h3 class="govuk-heading-s"><a class="govuk-link" href="#">APHA Scientific Tests Price List</a></h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Submissions not appropriate for ENGLAND &amp; WALES disease surveillance purposes</li>
+      <li>Tests on samples from companion animals</li>
+      <li>Animals outside of ENGLAND &amp; WALES at the time of sampling</li>
+    </ul>
+
+    <h3 class="govuk-heading-s"><a class="govuk-link" href="#">APHA Export and Captive Avian Import Test Price List</a></h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Tests on samples for export purposes</li>
+      <li>Import of captive avians — statutory tests required under EU directives</li>
+      <li>Tests for some artificial breeding purposes</li>
+    </ul>
+  </div>
+</div>
+
+{% endblock %}
