@@ -195,13 +195,98 @@ function getPriceList () {
 }
 
 // =============================================================================
+// ROUTES — helpers
+// =============================================================================
+
+// Human-readable labels for filter values used in the "selected filters" tags
+const speciesLabels = { Cattle: 'Cattle', Sheep: 'Sheep / Goat', Pig: 'Pig', Equine: 'Equine', Birds: 'Avian', Camelid: 'Camelid' }
+const typeLabels = { Package: 'Package', ELISA: 'ELISA', Histopathology: 'Histopathology', PME: 'Post mortem', 'RSA Package': 'RSA Package' }
+
+// Builds a /?key=val&... URL from a query object, stripping _unchecked sentinels
+function buildUrl (params) {
+  const parts = []
+  for (const [key, val] of Object.entries(params)) {
+    for (const v of [].concat(val)) {
+      if (v && v !== '_unchecked') {
+        parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(v)}`)
+      }
+    }
+  }
+  return parts.length ? `/?${parts.join('&')}` : '/'
+}
+
+// Returns a URL with one specific filter value removed from the current query
+function removeFilterUrl (query, key, valueToRemove) {
+  const updated = {}
+  for (const [k, v] of Object.entries(query)) {
+    if (k === key) {
+      if (valueToRemove === undefined) continue // remove entire key
+      const remaining = [].concat(v).filter(i => i !== '_unchecked' && i !== valueToRemove)
+      if (remaining.length) updated[k] = remaining
+    } else {
+      updated[k] = v
+    }
+  }
+  return buildUrl(updated)
+}
+
+// Builds the selectedFilters array passed to the template for tag display
+function buildSelectedFilters (query) {
+  const { search, species, age, type } = query
+  const groups = []
+
+  if (search && search.trim()) {
+    groups.push({
+      category: 'Search',
+      items: [{ label: search.trim(), removeUrl: removeFilterUrl(query, 'search') }]
+    })
+  }
+
+  const activeSpecies = species ? [].concat(species).filter(s => s !== '_unchecked') : []
+  if (activeSpecies.length) {
+    groups.push({
+      category: 'Species',
+      items: activeSpecies.map(s => ({
+        label: speciesLabels[s] || s,
+        removeUrl: removeFilterUrl(query, 'species', s)
+      }))
+    })
+  }
+
+  const activeAge = age ? [].concat(age).filter(a => a !== '_unchecked') : []
+  if (activeAge.length) {
+    groups.push({
+      category: 'Age group',
+      items: activeAge.map(a => ({
+        label: a,
+        removeUrl: removeFilterUrl(query, 'age', a)
+      }))
+    })
+  }
+
+  const activeType = type ? [].concat(type).filter(t => t !== '_unchecked') : []
+  if (activeType.length) {
+    groups.push({
+      category: 'Test type',
+      items: activeType.map(t => ({
+        label: typeLabels[t] || t,
+        removeUrl: removeFilterUrl(query, 'type', t)
+      }))
+    })
+  }
+
+  return groups
+}
+
+// =============================================================================
 // ROUTES
 // =============================================================================
 
 // / — main price list page (index.html), searchable and filterable
 // Supports query params: search, species[], age[], type[]
 router.get('/', (req, res) => {
-  let tests = getPriceList()
+  const allTests = getPriceList()
+  let tests = allTests
   const { search, species, age, type } = req.query
 
   if (search) {
@@ -239,7 +324,12 @@ router.get('/', (req, res) => {
     }
   }
 
-  res.render('index', { tests, query: req.query })
+  res.render('index', {
+    tests,
+    totalTests: allTests.length,
+    query: req.query,
+    selectedFilters: buildSelectedFilters(req.query)
+  })
 })
 
 // /test-detail — individual test detail page, looked up by ?code=

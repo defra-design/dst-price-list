@@ -5,6 +5,74 @@
 
 // Add extra styles here
 
+// Selected filter tags — based on the MoJ filter pattern
+// https://design-patterns.service.justice.gov.uk/components/filter/
+.app-filter-selected {
+  margin-bottom: govuk-spacing(4);
+  padding: govuk-spacing(3);
+  background-color: govuk-colour("light-grey");
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: govuk-spacing(2);
+  }
+
+  &__heading {
+    margin-bottom: 0;
+  }
+
+  &__groups {
+    display: flex;
+    flex-wrap: wrap;
+    gap: govuk-spacing(3);
+  }
+
+  &__subheading {
+    margin-bottom: govuk-spacing(1);
+    font-weight: bold;
+  }
+}
+
+.app-filter-tags {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: govuk-spacing(1);
+}
+
+.app-filter__tag {
+  display: inline-block;
+  padding: govuk-spacing(1) govuk-spacing(2);
+  background-color: govuk-colour("blue");
+  text-decoration: none;
+  @include govuk-font($size: 16);
+
+  // Override govuk-frontend's a:link and a:visited colour rules
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    color: govuk-colour("white");
+    text-decoration: none;
+  }
+
+  &::after {
+    content: " ×";
+  }
+
+  &:hover {
+    background-color: #003078; // govuk dark blue
+  }
+
+  &:focus {
+    @include govuk-focused-text;
+  }
+}
+
 .govuk-width-container {
   max-width: 1200px; // adjust to whatever width you need
 }

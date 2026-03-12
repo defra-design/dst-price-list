@@ -134,11 +134,40 @@
     </div>
   </div>
 
+  {% if selectedFilters.length %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <div class="app-filter-selected">
+        <div class="app-filter-selected__header">
+          <h2 class="govuk-heading-s app-filter-selected__heading">Selected filters</h2>
+          <a class="govuk-link govuk-link--no-visited-state" href="/">Clear all filters</a>
+        </div>
+        <div class="app-filter-selected__groups">
+          {% for group in selectedFilters %}
+            <div class="app-filter-selected__group">
+              <h3 class="govuk-body-s app-filter-selected__subheading">{{ group.category }}</h3>
+              <ul class="app-filter-tags">
+                {% for item in group.items %}
+                  <li>
+                    <a class="app-filter__tag" href="{{ item.removeUrl }}">
+                      <span class="govuk-visually-hidden">Remove this filter</span>{{ item.label }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
       {% if tests.length %}
-        <p class="govuk-body">Showing {{ tests.length }} test{{ "s" if tests.length !== 1 }}.</p>
+        <p class="govuk-body">Showing {{ tests.length }} of {{ totalTests }} test{{ "s" if totalTests !== 1 }}.</p>
       {% else %}
         <p class="govuk-body">No tests match your search. <a class="govuk-link" href="/">Clear search and filters</a>.</p>
       {% endif %}
