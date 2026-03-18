@@ -9,8 +9,34 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">{{ serviceName }}</h1>
-    <p class="govuk-body">PLACEHOLDER - Prices apply to diagnostic tests for farmed animals in England and Wales, submitted by private veterinary surgeons to APHA Laboratories. All prices are ex. VAT.</p>
-    <p class="govuk-body">Click on a test code for full details including sample requirements, accreditation and constituent tests.</p>
+    <p class="govuk-body">The Animal and Plant Health Agency (APHA) carries out disease surveillance to identify new and re-emerging diseases in farmed animals in England and Wales.</p>
+    <p class="govuk-body">This price list shows subsidised prices you can use when you submit samples to APHA laboratories as part of this work.</p>
+    <p class="govuk-body">If your submission does not meet these conditions, use one of the price lists below.</p>
+
+    <h2 class="govuk-heading-m">Before you submit a sample for testing</h2>
+    <p class="govuk-body"><a class="govuk-link" href="#">Read guidance on how to select samples and choose appropriate tests</a>.</p>
+
+    <h2 class="govuk-heading-m">How to submit your sample</h2>
+    <p class="govuk-body">You can use the <a class="govuk-link" href="#">animal disease testing service</a> to create submissions and check your results online for most tests.</p>
+    <p class="govuk-body">Read guidance on:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link" href="#">submitting samples from farm animals for diagnostic testing</a></li>
+      <li><a class="govuk-link" href="#">submitting farm animals for a post-mortem examination</a></li>
+    </ul>
+
+    <h2 class="govuk-heading-m">Other price lists</h2>
+    <p class="govuk-body">APHA test fees for export, captive avian import and ABC apply to tests for:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>exporting animals and live animal products</li>
+      <li>importing captive avians – statutory tests required under EU directives</li>
+      <li>carrying out animal breeding control</li>
+    </ul>
+    <p class="govuk-body">APHA Scientific offers a range of commercial tests for:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>submissions which are not eligible for disease surveillance testing</li>
+      <li>samples from companion animals</li>
+      <li>animals outside England and Wales at the time of sampling</li>
+    </ul>
   </div>
 </div>
 
@@ -167,53 +193,53 @@
     <div class="govuk-grid-column-full">
 
       {% if tests.length %}
-        <p class="govuk-body">Showing {{ tests.length }} of {{ totalTests }} test{{ "s" if totalTests !== 1 }}.</p>
+        <p class="govuk-body" role="status">Showing {{ tests.length }} of {{ totalTests }} test{{ "s" if totalTests !== 1 }}.</p>
       {% else %}
-        <p class="govuk-body">No tests match your search. <a class="govuk-link" href="/">Clear search and filters</a>.</p>
+        <p class="govuk-body" role="status">No tests match your search. <a class="govuk-link" href="/">Clear search and filters</a>.</p>
       {% endif %}
 
       {% if tests.length %}
-        <table class="govuk-table responsive-table">
+        <table class="govuk-table responsive-table" role="table">
           <caption class="govuk-table__caption govuk-visually-hidden">Disease Surveillance Tests price list</caption>
-          <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <th scope="col" class="govuk-table__header">Test code</th>
-              <th scope="col" class="govuk-table__header">Species</th>
-              <th scope="col" class="govuk-table__header">Test description</th>
-              <th scope="col" class="govuk-table__header">Test type</th>
-              <th scope="col" class="govuk-table__header">Sample type</th>
-              <th scope="col" class="govuk-table__header">Sample quantity</th>
-              <th scope="col" class="govuk-table__header govuk-table__header--numeric">Price (£) ex. VAT</th>
+          <thead class="govuk-table__head" role="rowgroup">
+            <tr class="govuk-table__row" role="row">
+              <th scope="col" class="govuk-table__header" role="columnheader">Test code</th>
+              <th scope="col" class="govuk-table__header" role="columnheader">Species</th>
+              <th scope="col" class="govuk-table__header" role="columnheader">Test description</th>
+              <th scope="col" class="govuk-table__header" role="columnheader">Test type</th>
+              <th scope="col" class="govuk-table__header" role="columnheader">Sample type</th>
+              <th scope="col" class="govuk-table__header" role="columnheader">Sample quantity</th>
+              <th scope="col" class="govuk-table__header govuk-table__header--numeric" role="columnheader">Price (£) ex. VAT</th>
             </tr>
           </thead>
-          <tbody class="govuk-table__body">
+          <tbody class="govuk-table__body" role="rowgroup">
             {% for test in tests %}
-              <tr class="govuk-table__row">
-                <td class="govuk-table__cell">
+              <tr class="govuk-table__row" role="row">
+                <td class="govuk-table__cell" role="cell">
                   <div class="govuk-table-heading-wrapper"><span class="table-heading">Test code</span></div>
                   <div><span class="govuk-table-span"><a class="govuk-link" href="/test-detail?code={{ test.code }}">{{ test.code }}</a></span></div>
                 </td>
-                <td class="govuk-table__cell">
+                <td class="govuk-table__cell" role="cell">
                   <div class="govuk-table-heading-wrapper"><span class="table-heading">Species</span></div>
                   <div><span class="govuk-table-span">{{ test.species }}{% if test.age %}<br><span class="govuk-body-s govuk-secondary-text-colour">{{ test.age }}</span>{% endif %}</span></div>
                 </td>
-                <td class="govuk-table__cell">
+                <td class="govuk-table__cell" role="cell">
                   <div class="govuk-table-heading-wrapper"><span class="table-heading">Test description</span></div>
                   <div><span class="govuk-table-span">{{ test.description }}</span></div>
                 </td>
-                <td class="govuk-table__cell">
+                <td class="govuk-table__cell" role="cell">
                   <div class="govuk-table-heading-wrapper"><span class="table-heading">Test type</span></div>
                   <div><span class="govuk-table-span">{{ test.clinicalPurpose }}</span></div>
                 </td>
-                <td class="govuk-table__cell">
+                <td class="govuk-table__cell" role="cell">
                   <div class="govuk-table-heading-wrapper"><span class="table-heading">Sample type</span></div>
                   <div><span class="govuk-table-span">{{ test.sampleType }}</span></div>
                 </td>
-                <td class="govuk-table__cell">
+                <td class="govuk-table__cell" role="cell">
                   <div class="govuk-table-heading-wrapper"><span class="table-heading">Sample quantity</span></div>
                   <div><span class="govuk-table-span">{{ test.sampleQuantity }}</span></div>
                 </td>
-                <td class="govuk-table__cell govuk-table__cell--numeric">
+                <td class="govuk-table__cell govuk-table__cell--numeric" role="cell">
                   <div class="govuk-table-heading-wrapper"><span class="table-heading">Price (£) ex. VAT</span></div>
                   <div><span class="govuk-table-span">{{ test.price }}</span></div>
                 </td>
