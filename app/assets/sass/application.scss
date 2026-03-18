@@ -5,6 +5,11 @@
 
 // Add extra styles here
 
+// Expose GOV.UK secondary text colour as a utility class
+.govuk-secondary-text-colour {
+  color: $govuk-secondary-text-colour;
+}
+
 // Selected filter tags — based on the MoJ filter pattern
 // https://design-patterns.service.justice.gov.uk/components/filter/
 .app-filter-selected {
@@ -75,4 +80,78 @@
 
 .govuk-width-container {
   max-width: 1200px; // adjust to whatever width you need
+}
+
+// Responsive table — column headers hidden on mobile and injected into each
+// cell as a label, so the table reads as a 2-column key/value list on small
+// screens with no horizontal scroll.
+.responsive-table {
+  width: 100%;
+
+  thead {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+
+    @media (min-width: 768px) {
+      clip: auto;
+      display: table-header-group;
+      height: auto;
+      overflow: auto;
+      position: relative;
+      width: auto;
+    }
+  }
+
+  tbody {
+    td {
+      display: block;
+
+      @media (min-width: 768px) {
+        display: table-cell;
+      }
+
+      @media (max-width: 767px) {
+        padding: 5px 0;
+      }
+    }
+
+    tr {
+      display: block;
+      margin-bottom: govuk-spacing(3);
+      border-bottom: 1px solid $govuk-border-colour;
+      padding-bottom: govuk-spacing(2);
+
+      @media (min-width: 768px) {
+        display: table-row;
+        margin-bottom: 0;
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+    }
+
+    .govuk-table-heading-wrapper {
+      display: block;
+
+      @media (min-width: 768px) {
+        display: none;
+      }
+    }
+
+    .table-heading {
+      font-weight: bold;
+      text-align: left;
+      padding-right: 1em;
+      display: block;
+    }
+
+    .govuk-table-span {
+      display: block;
+      margin-bottom: govuk-spacing(1);
+    }
+  }
 }
