@@ -211,6 +211,7 @@
               <th scope="col" class="govuk-table__header" role="columnheader">Test type</th>
               <th scope="col" class="govuk-table__header" role="columnheader">Sample type</th>
               <th scope="col" class="govuk-table__header" role="columnheader">Sample quantity</th>
+              <th scope="col" class="govuk-table__header" role="columnheader">Max turnaround (working days)</th>
               <th scope="col" class="govuk-table__header govuk-table__header--numeric" role="columnheader">Price (£) ex. VAT</th>
             </tr>
           </thead>
@@ -240,6 +241,10 @@
                 <td class="govuk-table__cell" role="cell">
                   <div class="govuk-table-heading-wrapper"><span class="table-heading">Sample quantity</span></div>
                   <div><span class="govuk-table-span">{{ test.sampleQuantity }}</span></div>
+                </td>
+                <td class="govuk-table__cell" role="cell">
+                  <div class="govuk-table-heading-wrapper"><span class="table-heading">Max turnaround (working days)</span></div>
+                  <div><span class="govuk-table-span">{{ test.turnaround }}</span></div>
                 </td>
                 <td class="govuk-table__cell govuk-table__cell--numeric" role="cell">
                   <div class="govuk-table-heading-wrapper"><span class="table-heading">Price (£) ex. VAT</span></div>
