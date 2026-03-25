@@ -45,7 +45,12 @@
 
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">Price (ex. VAT)</dt>
-        <dd class="govuk-summary-list__value">£{{ test.price }}</dd>
+        <dd class="govuk-summary-list__value">
+          £{{ test.price }}
+          {% if test.price5plus and test.price5plus !== test.price %}<br><span class="govuk-hint">5+ submissions: £{{ test.price5plus }}</span>{% endif %}
+          {% if test.price10plus and test.price10plus !== test.price %}<br><span class="govuk-hint">10+ submissions: £{{ test.price10plus }}</span>{% endif %}
+          {% if test.priceOther and test.priceOther !== test.price %}<br><span class="govuk-hint">Other: £{{ test.priceOther }}</span>{% endif %}
+        </dd>
       </div>
 
       <div class="govuk-summary-list__row">
@@ -101,7 +106,7 @@
         <tbody class="govuk-table__body">
           {% for constituent in test.constituentTests %}
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell">{{ constituent.code }}</td>
+              <td class="govuk-table__cell"><a class="govuk-link" href="/test-detail?code={{ constituent.code }}">{{ constituent.code }}</a></td>
               <td class="govuk-table__cell">{{ constituent.name }}</td>
             </tr>
           {% endfor %}

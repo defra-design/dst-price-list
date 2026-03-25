@@ -248,7 +248,12 @@
                 </td>
                 <td class="govuk-table__cell govuk-table__cell--numeric" role="cell">
                   <div class="govuk-table-heading-wrapper"><span class="table-heading">Price (£) ex. VAT</span></div>
-                  <div><span class="govuk-table-span">{{ test.price }}</span></div>
+                  <div>
+                    <span class="govuk-table-span">{{ test.price }}</span>
+                    {% if test.price5plus and test.price5plus !== test.price %}<br><span class="govuk-body-s govuk-secondary-text-colour">5+: £{{ test.price5plus }}</span>{% endif %}
+                    {% if test.price10plus and test.price10plus !== test.price %}<br><span class="govuk-body-s govuk-secondary-text-colour">10+: £{{ test.price10plus }}</span>{% endif %}
+                    {% if test.priceOther and test.priceOther !== test.price %}<br><span class="govuk-body-s govuk-secondary-text-colour">Other: £{{ test.priceOther }}</span>{% endif %}
+                  </div>
                 </td>
               </tr>
             {% endfor %}

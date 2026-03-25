@@ -134,6 +134,9 @@ function parseConstituentTests (raw) {
 //   6  Test Type
 //   7  Turn around time (working days)
 //   8  PVS Price (£) — single test price, ex VAT
+//   9  PVS Price 5+ (£)
+//  10  PVS Price 10+ (£)
+//  11  PVS Price Other (£)
 //  14  Species List
 //  15  Price List Categories List
 //  18  Is Active (TRUE / FALSE)
@@ -165,6 +168,9 @@ function getPriceList () {
     const testType = (cols[6] || '').trim()
     const turnaround = (cols[7] || '').trim()
     const price = (cols[8] || '').trim()
+    const price5plus = (cols[9] || '').trim()
+    const price10plus = (cols[10] || '').trim()
+    const priceOther = (cols[11] || '').trim()
     const speciesList = (cols[14] || '').trim()
     const categories = (cols[15] || '').trim()
     const packageNotes = (cols[20] || '').trim()
@@ -182,7 +188,7 @@ function getPriceList () {
     const clinicalPurpose = deriveClinicalPurpose(description)
 
     return {
-      code, description, testType, turnaround, price,
+      code, description, testType, turnaround, price, price5plus, price10plus, priceOther,
       species, age, animal, clinicalPurpose,
       sampleType, sampleQuantity, categories,
       packageNotes, constituentTests,
