@@ -192,7 +192,7 @@
           <thead class="govuk-table__head" role="rowgroup">
             <tr class="govuk-table__row" role="row">
               <th scope="col" class="govuk-table__header" role="columnheader">Test code</th>
-              <th scope="col" class="govuk-table__header" role="columnheader">Species</th>
+              <th scope="col" class="govuk-table__header" role="columnheader">Species<br><span class="govuk-body-s govuk-secondary-text-colour">Age group</span></th>
               <th scope="col" class="govuk-table__header" role="columnheader">Test description</th>
               <th scope="col" class="govuk-table__header" role="columnheader">Test type</th>
               <th scope="col" class="govuk-table__header" role="columnheader">Sample type</th>
@@ -236,9 +236,11 @@
                   <div class="govuk-table-heading-wrapper"><span class="table-heading">Price (£) ex. VAT</span></div>
                   <div>
                     <span class="govuk-table-span">{{ test.price }}</span>
-                    {% if test.price5plus and test.price5plus !== test.price %}<br><span class="govuk-body-s govuk-secondary-text-colour">5+: £{{ test.price5plus }}</span>{% endif %}
-                    {% if test.price10plus and test.price10plus !== test.price %}<br><span class="govuk-body-s govuk-secondary-text-colour">10+: £{{ test.price10plus }}</span>{% endif %}
-                    {% if test.priceOther and test.priceOther !== test.price %}<br><span class="govuk-body-s govuk-secondary-text-colour">Other: £{{ test.priceOther }}</span>{% endif %}
+                    {# Show 5+ price if it differs from the single price #}
+                    {% if test.price5plus and test.price5plus !== test.price %}<br><span class="govuk-body-s govuk-secondary-text-colour">5+: {{ test.price5plus }}</span>{% endif %}
+                    {# Only show 10+ if it differs from both the single price and the 5+ price — if 5+ and 10+ are the same, 5+ covers both #}
+                    {% if test.price10plus and test.price10plus !== test.price and test.price10plus !== test.price5plus %}<br><span class="govuk-body-s govuk-secondary-text-colour">10+: {{ test.price10plus }}</span>{% endif %}
+                    {% if test.priceOther and test.priceOther !== test.price %}<br><span class="govuk-body-s govuk-secondary-text-colour">Other: {{ test.priceOther }}</span>{% endif %}
                   </div>
                 </td>
               </tr>
