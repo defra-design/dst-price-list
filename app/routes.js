@@ -116,11 +116,13 @@ function deriveClinicalPurpose (description) {
 // This splits them into an array of { code, name } objects for the template.
 function parseConstituentTests (raw) {
   if (!raw) return []
-  return raw.split(', ').map(entry => {
+  // Split only on ', ' that is immediately followed by a test code pattern (e.g. TC0829, PC0059).
+  // A plain split(', ') would break test names that contain commas (e.g. "K88, K99, 987P").
+  return raw.split(/, (?=[A-Z]{2}\d{4} : )/).map(entry => {
     const sep = entry.indexOf(' : ')
-    if (sep === -1) return { code: entry.trim(), name: '' }
+    if (sep === -1) return null
     return { code: entry.slice(0, sep).trim(), name: entry.slice(sep + 3).trim() }
-  }).filter(t => t.code)
+  }).filter(Boolean)
 }
 
 // -----------------------------------------------------------------------------
