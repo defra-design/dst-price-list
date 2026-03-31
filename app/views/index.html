@@ -198,7 +198,7 @@
               <th scope="col" class="govuk-table__header" role="columnheader">Sample type</th>
               <th scope="col" class="govuk-table__header" role="columnheader">Sample quantity</th>
               <th scope="col" class="govuk-table__header" role="columnheader">Max turnaround (working days)</th>
-              <th scope="col" class="govuk-table__header govuk-table__header--numeric" role="columnheader">Price (£) ex. VAT</th>
+              <th scope="col" class="govuk-table__header govuk-table__header--numeric" role="columnheader">Price per test (£) ex. VAT</th>
             </tr>
           </thead>
           <tbody class="govuk-table__body" role="rowgroup">
@@ -233,7 +233,7 @@
                   <div><span class="govuk-table-span">{{ test.turnaround }}</span></div>
                 </td>
                 <td class="govuk-table__cell govuk-table__cell--numeric" role="cell">
-                  <div class="govuk-table-heading-wrapper"><span class="table-heading">Price (£) ex. VAT</span></div>
+                  <div class="govuk-table-heading-wrapper"><span class="table-heading">Price per test (£) ex. VAT</span></div>
                   <div>
                     <span class="govuk-table-span">{{ test.price }}</span>
                     {# Show 5+ price if it differs from the single price #}
