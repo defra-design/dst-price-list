@@ -181,9 +181,9 @@
     <div class="govuk-grid-column-full">
 
       {% if tests.length %}
-        <p class="govuk-body" role="status">Showing {{ tests.length }} of {{ totalTests }} test{{ "s" if totalTests !== 1 }}.</p>
+        <p class="govuk-body" id="search-results" tabindex="-1" role="status">Showing {{ tests.length }} of {{ totalTests }} test{{ "s" if totalTests !== 1 }}.</p>
       {% else %}
-        <p class="govuk-body" role="status">No tests match your search. <a class="govuk-link" href="/">Clear search and filters</a>.</p>
+        <p class="govuk-body" id="search-results" tabindex="-1" role="status">No tests match your search. <a class="govuk-link" href="/">Clear search and filters</a>.</p>
       {% endif %}
 
       {% if tests.length %}

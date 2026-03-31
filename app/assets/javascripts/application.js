@@ -4,5 +4,10 @@
 //
 
 window.GOVUKPrototypeKit.documentReady(() => {
-  // Add JavaScript here
+  // After a search or filter, move focus to the results count so screen readers
+  // announce it immediately and keyboard users don't have to re-navigate down the page.
+  if (window.location.search) {
+    const results = document.getElementById('search-results')
+    if (results) results.focus()
+  }
 })
