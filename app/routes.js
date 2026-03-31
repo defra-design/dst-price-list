@@ -126,61 +126,67 @@ function parseConstituentTests (raw) {
 // -----------------------------------------------------------------------------
 // Data load and cache
 // Reads the full CSV once and caches the result. Only rows where Is Active
-// (col 18) = TRUE are included — inactive tests are excluded from the prototype.
+// (col 14) = TRUE are included — inactive tests are excluded from the prototype.
 //
-// CSV column reference (0-based index):
+// CSV column reference (0-based index) — price-list-v2.csv:
 //   0  Test Code
-//   4  Test Description
-//   6  Test Type
-//   7  Turn around time (working days)
-//   8  PVS Price (£) — single test price, ex VAT
-//   9  PVS Price 5+ (£)
-//  10  PVS Price 10+ (£)
-//  11  PVS Price Other (£)
-//  14  Species List
-//  15  Price List Categories List
-//  18  Is Active (TRUE / FALSE)
-//  20  Package Notes
-//  21  Constituent Tests List
-//  22  UKAS Accred (Yes / No)
-//  23  UKAS Accred Notes
-//  25  Submission Instructions
-//  26  Sample Type
-//  27  Sample Quantity
-//  28  Datasheet List
+//   1  Test Description
+//   2  Test Type
+//   3  Max TRT (turnaround, working days)
+//   4  PVS Price (£) — single test price, ex VAT
+//   5  PVS Price 5+ (£)
+//   6  PVS Price 10+ (£)
+//   7  PVS Price Other (£)
+//  10  Species List
+//  11  Price List Categories List
+//  14  Is Active (TRUE / empty)
+//  16  Package Notes
+//  17  Constituent Tests List
+//  18  UKAS Accred (Yes / No)
+//  19  UKAS Accred Notes
+//  20  Diseases List        — not used in prototype
+//  21  Notes (External Website)
+//  22  Submission Instructions
+//  23  Keywords             — not used in prototype
+//  24  Sample Type
+//  25  Sample Quantity
+//  26  Datasheet List
+//  27  Test Set-up Days
 // -----------------------------------------------------------------------------
 let priceListCache = null
 
 function getPriceList () {
   if (priceListCache) return priceListCache
 
-  const csvPath = path.join(__dirname, 'data', 'price-list.csv')
+  const csvPath = path.join(__dirname, 'data', 'price-list-v2.csv')
   // File uses Windows-1252 encoding; read as latin1 to preserve £ and other characters
   const text = fs.readFileSync(csvPath, 'latin1')
   const rows = parseCSV(text)
 
   // rows[0] is the header — skip it
   priceListCache = rows.slice(1).map(cols => {
-    if ((cols[18] || '').trim().toUpperCase() !== 'TRUE') return null
+    if ((cols[14] || '').trim().toUpperCase() !== 'TRUE') return null
 
     const code = (cols[0] || '').trim()
-    const description = (cols[4] || '').trim()
-    const testType = (cols[6] || '').trim()
-    const turnaround = (cols[7] || '').trim()
-    const price = (cols[8] || '').trim()
-    const price5plus = (cols[9] || '').trim()
-    const price10plus = (cols[10] || '').trim()
-    const priceOther = (cols[11] || '').trim()
-    const speciesList = (cols[14] || '').trim()
-    const categories = (cols[15] || '').trim()
-    const packageNotes = (cols[20] || '').trim()
-    const constituentTests = parseConstituentTests((cols[21] || '').trim())
-    const ukasAccred = (cols[22] || '').trim()
-    const ukasNotes = (cols[23] || '').trim()
-    const submissionInstructions = (cols[25] || '').trim()
-    const sampleType = (cols[26] || '').trim()
-    const sampleQuantity = (cols[27] || '').trim()
-    const datasheets = (cols[28] || '').trim()
+    const description = (cols[1] || '').trim()
+    const testType = (cols[2] || '').trim()
+    const turnaround = (cols[3] || '').trim()
+    const price = (cols[4] || '').trim()
+    const price5plus = (cols[5] || '').trim()
+    const price10plus = (cols[6] || '').trim()
+    const priceOther = (cols[7] || '').trim()
+    const speciesList = (cols[10] || '').trim()
+    const categories = (cols[11] || '').trim()
+    const packageNotes = (cols[16] || '').trim()
+    const constituentTests = parseConstituentTests((cols[17] || '').trim())
+    const ukasAccred = (cols[18] || '').trim()
+    const ukasNotes = (cols[19] || '').trim()
+    const notes = (cols[21] || '').trim()
+    const submissionInstructions = (cols[22] || '').trim()
+    const sampleType = (cols[24] || '').trim()
+    const sampleQuantity = (cols[25] || '').trim()
+    const datasheets = (cols[26] || '').trim()
+    const testSetupDays = (cols[27] || '').trim()
 
     const species = deriveSpecies(speciesList, categories)
     const age = deriveAge(description)
@@ -193,7 +199,7 @@ function getPriceList () {
       sampleType, sampleQuantity, categories,
       packageNotes, constituentTests,
       ukasAccred, ukasNotes,
-      submissionInstructions, datasheets
+      notes, submissionInstructions, datasheets, testSetupDays
     }
   }).filter(Boolean)
 

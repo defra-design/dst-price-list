@@ -70,6 +70,13 @@
         </dd>
       </div>
 
+      {% if test.notes %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Notes</dt>
+          <dd class="govuk-summary-list__value">{{ test.notes }}</dd>
+        </div>
+      {% endif %}
+
       {% if test.submissionInstructions %}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">Submission instructions</dt>
@@ -79,8 +86,15 @@
 
       {% if test.datasheets %}
         <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Data sheets</dt>
+          <dt class="govuk-summary-list__key">Test data sheet</dt>
           <dd class="govuk-summary-list__value">{{ test.datasheets }}</dd>
+        </div>
+      {% endif %}
+
+      {% if test.testSetupDays %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Usual test set-up days for export samples</dt>
+          <dd class="govuk-summary-list__value">{{ test.testSetupDays }}</dd>
         </div>
       {% endif %}
 
