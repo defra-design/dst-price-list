@@ -32,11 +32,6 @@
       </div>
 
       <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Clinical purpose</dt>
-        <dd class="govuk-summary-list__value">{{ test.clinicalPurpose if test.clinicalPurpose else "—" }}</dd>
-      </div>
-
-      <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">Max turnaround time</dt>
         <dd class="govuk-summary-list__value">
           {% if test.turnaround %}{{ test.turnaround }} working days{% else %}—{% endif %}
@@ -44,7 +39,7 @@
       </div>
 
       <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Price (ex. VAT)</dt>
+        <dt class="govuk-summary-list__key">Price per test (£) ex. VAT</dt>
         <dd class="govuk-summary-list__value">
           £{{ test.price }}
           {# Show 5+ price if it differs from the single price #}
