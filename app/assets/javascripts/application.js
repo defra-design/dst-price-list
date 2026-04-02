@@ -11,3 +11,6 @@ window.GOVUKPrototypeKit.documentReady(() => {
     if (results) results.focus()
   }
 })
+
+window.GOVUKFrontend.initAll()
+window.MOJFrontend.initAll()
