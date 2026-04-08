@@ -57,29 +57,35 @@
 
             <div class="govuk-grid-column-one-quarter">
               <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
-                  <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Species</legend>
-                  <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                    {% set speciesOptions = [
-                      { value: "Cattle",   label: "Cattle" },
-                      { value: "Sheep",    label: "Sheep / Goat" },
-                      { value: "Pig",      label: "Pig" },
-                      { value: "Equine",   label: "Equine" },
-                      { value: "Birds",    label: "Avian" },
-                      { value: "Camelid",  label: "Camelid" }
-                    ] %}
-                    {% for opt in speciesOptions %}
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input"
-                          id="species-{{ opt.value | lower }}"
-                          name="species" type="checkbox" value="{{ opt.value }}"
-                          {% if query.species and opt.value in query.species %}checked{% endif %}>
-                        <label class="govuk-label govuk-checkboxes__label"
-                          for="species-{{ opt.value | lower }}">{{ opt.label }}</label>
-                      </div>
-                    {% endfor %}
-                  </div>
-                </fieldset>
+                <label class="govuk-label govuk-label--s" for="species">Species</label>
+                <select class="govuk-select" id="species" name="species">
+                  <option value="">All species</option>
+                  {% set speciesOptions = [
+                    { value: "Avian",     label: "Avian" },
+                    { value: "Badger",    label: "Badger" },
+                    { value: "Birds",     label: "Birds" },
+                    { value: "Cattle",    label: "Cattle" },
+                    { value: "Chicken",   label: "Chicken" },
+                    { value: "Deer",      label: "Deer" },
+                    { value: "Dog",       label: "Dog" },
+                    { value: "Duck",      label: "Duck" },
+                    { value: "Equine",    label: "Equine" },
+                    { value: "Goat",      label: "Goat" },
+                    { value: "Goose",     label: "Goose" },
+                    { value: "Horse",     label: "Horse" },
+                    { value: "Mammals",   label: "Mammals" },
+                    { value: "Other",     label: "Other" },
+                    { value: "Pheasant",  label: "Pheasant" },
+                    { value: "Pig",       label: "Pig" },
+                    { value: "Rabbit",    label: "Rabbit" },
+                    { value: "Ruminants", label: "Ruminants" },
+                    { value: "Sheep",     label: "Sheep" },
+                    { value: "Turkey",    label: "Turkey" }
+                  ] %}
+                  {% for opt in speciesOptions %}
+                    <option value="{{ opt.value }}" {% if query.species == opt.value %}selected{% endif %}>{{ opt.label }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </div>
 

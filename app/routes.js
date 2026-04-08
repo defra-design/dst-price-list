@@ -8,6 +8,14 @@ const router = govukPrototypeKit.requests.setupRouter()
 const fs = require('fs')
 const path = require('path')
 
+// Serve MoJ Frontend pre-built assets
+router.get('/moj/all.bundle.js', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../node_modules/@ministryofjustice/frontend/moj/all.bundle.js'))
+})
+router.get('/moj/moj-frontend.min.css', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../node_modules/@ministryofjustice/frontend/moj/moj-frontend.min.css'))
+})
+
 // =============================================================================
 // PROTOTYPE ONLY — CSV DATA LAYER
 // =============================================================================
@@ -213,7 +221,13 @@ function getPriceList () {
 // =============================================================================
 
 // Human-readable labels for filter values used in the "selected filters" tags
-const speciesLabels = { Cattle: 'Cattle', Sheep: 'Sheep / Goat', Pig: 'Pig', Equine: 'Equine', Birds: 'Avian', Camelid: 'Camelid' }
+const speciesLabels = {
+  Avian: 'Avian', Badger: 'Badger', Birds: 'Birds', Cattle: 'Cattle',
+  Chicken: 'Chicken', Deer: 'Deer', Dog: 'Dog', Duck: 'Duck',
+  Equine: 'Equine', Goat: 'Goat', Goose: 'Goose', Horse: 'Horse',
+  Mammals: 'Mammals', Other: 'Other', Pheasant: 'Pheasant', Pig: 'Pig',
+  Rabbit: 'Rabbit', Ruminants: 'Ruminants', Sheep: 'Sheep', Turkey: 'Turkey'
+}
 const typeLabels = { Package: 'Package', ELISA: 'ELISA', Histopathology: 'Histopathology', PME: 'Post mortem', 'RSA Package': 'RSA Package' }
 
 // Builds a /?key=val&... URL from a query object, stripping _unchecked sentinels
