@@ -4,3 +4,13 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 #}
 
 {% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+
+{% block headIcons %}
+  {{ super() }}
+  <link rel="stylesheet" href="/moj/moj-frontend.min.css">
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="/moj/all.bundle.js"></script>
+{% endblock %}
