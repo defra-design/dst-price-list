@@ -136,6 +136,7 @@
       @media (max-width: 767px) {
         padding: 5px 0;
         border-bottom: none; // row separator handles this — avoids double line
+        text-align: left !important;
       }
     }
 
