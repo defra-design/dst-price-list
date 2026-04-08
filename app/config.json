@@ -1,5 +1,5 @@
 {
-  "serviceName": "Disease Surveillance Tests Price List",
+  "serviceName": "Disease surveillance tests price list",
   "useServiceNavigation": true,
   "plugins": {
     "govuk-frontend": {
