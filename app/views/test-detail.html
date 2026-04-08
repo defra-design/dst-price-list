@@ -21,54 +21,66 @@
 
     <dl class="govuk-summary-list">
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Test type</dt>
-        <dd class="govuk-summary-list__value">{{ test.testType if test.testType else "—" }}</dd>
-      </div>
+      {% if test.testType %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Test type</dt>
+          <dd class="govuk-summary-list__value">{{ test.testType }}</dd>
+        </div>
+      {% endif %}
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Animal</dt>
-        <dd class="govuk-summary-list__value">{{ test.animal if test.animal else "—" }}</dd>
-      </div>
+      {% if test.turnaround %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Max turnaround time</dt>
+          <dd class="govuk-summary-list__value">{{ test.turnaround }} working days</dd>
+        </div>
+      {% endif %}
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Max turnaround time</dt>
-        <dd class="govuk-summary-list__value">
-          {% if test.turnaround %}{{ test.turnaround }} working days{% else %}—{% endif %}
-        </dd>
-      </div>
+      {% if test.price %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Price per test (ex. VAT)</dt>
+          <dd class="govuk-summary-list__value">
+            £{{ test.price }}
+            {# Show 5+ price if it differs from the single price #}
+            {% if test.price5plus and test.price5plus !== test.price %}<br><span class="govuk-hint">5+ submissions: £{{ test.price5plus }}</span>{% endif %}
+            {# Only show 10+ if it differs from both the single price and the 5+ price — if 5+ and 10+ are the same, 5+ covers both #}
+            {% if test.price10plus and test.price10plus !== test.price and test.price10plus !== test.price5plus %}<br><span class="govuk-hint">10+ submissions: £{{ test.price10plus }}</span>{% endif %}
+            {% if test.priceOther and test.priceOther !== test.price %}<br><span class="govuk-hint">Other: £{{ test.priceOther }}</span>{% endif %}
+          </dd>
+        </div>
+      {% endif %}
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Price per test (£) ex. VAT</dt>
-        <dd class="govuk-summary-list__value">
-          £{{ test.price }}
-          {# Show 5+ price if it differs from the single price #}
-          {% if test.price5plus and test.price5plus !== test.price %}<br><span class="govuk-hint">5+ submissions: {{ test.price5plus }}</span>{% endif %}
-          {# Only show 10+ if it differs from both the single price and the 5+ price — if 5+ and 10+ are the same, 5+ covers both #}
-          {% if test.price10plus and test.price10plus !== test.price and test.price10plus !== test.price5plus %}<br><span class="govuk-hint">10+ submissions: {{ test.price10plus }}</span>{% endif %}
-          {% if test.priceOther and test.priceOther !== test.price %}<br><span class="govuk-hint">Other: {{ test.priceOther }}</span>{% endif %}
-        </dd>
-      </div>
+      {% if test.animal %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Animal</dt>
+          <dd class="govuk-summary-list__value">{{ test.animal }}</dd>
+        </div>
+      {% endif %}
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Sample type</dt>
-        <dd class="govuk-summary-list__value">{{ test.sampleType if test.sampleType else "—" }}</dd>
-      </div>
+      {% if test.sampleType %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Sample type</dt>
+          <dd class="govuk-summary-list__value">{{ test.sampleType }}</dd>
+        </div>
+      {% endif %}
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Sample quantity</dt>
-        <dd class="govuk-summary-list__value">{{ test.sampleQuantity if test.sampleQuantity else "—" }}</dd>
-      </div>
+      {% if test.sampleQuantity %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Sample quantity</dt>
+          <dd class="govuk-summary-list__value">{{ test.sampleQuantity }}</dd>
+        </div>
+      {% endif %}
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">UKAS accreditation</dt>
-        <dd class="govuk-summary-list__value">
-          {{ test.ukasAccred if test.ukasAccred else "—" }}
-          {% if test.ukasNotes %}
-            <br><span class="govuk-hint">{{ test.ukasNotes }}</span>
-          {% endif %}
-        </dd>
-      </div>
+      {% if test.ukasAccred %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">UKAS accreditation (ISO/IEC 17025)</dt>
+          <dd class="govuk-summary-list__value">
+            {{ test.ukasAccred }}
+            {% if test.ukasNotes %}
+              <br><span class="govuk-hint">{{ test.ukasNotes }}</span>
+            {% endif %}
+          </dd>
+        </div>
+      {% endif %}
 
       {% if test.notes %}
         <div class="govuk-summary-list__row">
