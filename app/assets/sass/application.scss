@@ -5,6 +5,25 @@
 
 // Add extra styles here
 
+// Search input + button side by side
+.govuk-input-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: govuk-spacing(2);
+
+  .govuk-input {
+    flex: 1 1 auto;
+    width: auto;
+  }
+}
+
+// Highlighted inset text — based on the MoJ Design System variant
+// https://design-patterns.service.justice.gov.uk/components/inset-text-highlighted/
+.govuk-inset-text--highlighted {
+  border-left-color: govuk-colour("blue");
+  background-color: #eaf4f9;
+}
+
 // Expose GOV.UK secondary text colour as a utility class
 .govuk-secondary-text-colour {
   color: $govuk-secondary-text-colour;
