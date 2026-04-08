@@ -135,13 +135,14 @@
 
       @media (max-width: 767px) {
         padding: 5px 0;
+        border-bottom: none; // row separator handles this — avoids double line
       }
     }
 
     tr {
       display: block;
       margin-bottom: govuk-spacing(3);
-      border-bottom: 1px solid $govuk-border-colour;
+      border-bottom: 2px solid $govuk-border-colour;
       padding-bottom: govuk-spacing(2);
 
       @media (min-width: 768px) {
