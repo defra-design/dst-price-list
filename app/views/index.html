@@ -91,57 +91,55 @@
 
             <div class="govuk-grid-column-one-quarter">
               <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
-                  <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Age group</legend>
-                  <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                    {% set ageOptions = [
-                      { value: "1–5 days",       label: "1–5 days" },
-                      { value: "6–21 days",      label: "6–21 days" },
-                      { value: "6 days–6 weeks", label: "6 days–6 weeks" },
-                      { value: "6+ weeks",       label: "6+ weeks" },
-                      { value: "22+ days",       label: "22+ days" },
-                      { value: "2+ weeks",       label: "2+ weeks" },
-                      { value: "Adult",          label: "Adult" }
-                    ] %}
-                    {% for opt in ageOptions %}
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input"
-                          id="age-{{ loop.index }}"
-                          name="age" type="checkbox" value="{{ opt.value }}"
-                          {% if query.age and opt.value in query.age %}checked{% endif %}>
-                        <label class="govuk-label govuk-checkboxes__label"
-                          for="age-{{ loop.index }}">{{ opt.label }}</label>
-                      </div>
-                    {% endfor %}
-                  </div>
-                </fieldset>
+                <label class="govuk-label govuk-label--s" for="type">Test type</label>
+                <select class="govuk-select" id="type" name="type">
+                  <option value="">All test types</option>
+                  {% set typeOptions = [
+                    "Ab ELISA", "Ag ELISA", "AGIDT", "Bacteriology", "Baermann technique",
+                    "BioRad ELISA", "CFT", "CFT Package", "Composite McMaster", "Culture",
+                    "Culture & ID to sp level", "Culture & microscopy", "Culture & typing",
+                    "Culture / DGGE / PCR", "Disc diffusion", "ELISA", "ELISA (diff.)", "EM",
+                    "FAT", "Flotation method", "Genotyping", "HAIT", "HAIT Package",
+                    "Histopathology", "ID", "ID & serotyping", "IFAT", "LAT", "Liquid culture",
+                    "MAT", "McMaster method", "Micro Filtration Test", "Microbiology",
+                    "Microscopy", "Modified McMaster Method", "NPLA (non comparative)",
+                    "OK serotyping screen", "Package", "PAGE", "PCR", "PCR (real time)",
+                    "PCR / sequencing", "PME", "Parasitology", "Phage typing", "RSA",
+                    "RSA Package", "RT PCR", "RT PCR (real time)", "SAT", "SAT (tube test)",
+                    "SNT", "SNT (24hr)", "Sedimentation method", "Sequencing", "Serotyping",
+                    "Smear and ID", "Stain slide", "Time", "Typing", "VI", "VI (1 passage)",
+                    "VI (2 passages)", "VI (3 passages)", "VI in eggs",
+                    "VI in tissue cult. (2 passages)", "VNT", "Western immunoblotting",
+                    "Worm egg count", "cELISA", "iELISA"
+                  ] %}
+                  {% for opt in typeOptions %}
+                    <option value="{{ opt }}" {% if query.type == opt %}selected{% endif %}>{{ opt }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </div>
 
             <div class="govuk-grid-column-one-quarter">
               <div class="govuk-form-group">
-                <fieldset class="govuk-fieldset">
-                  <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Test type</legend>
-                  <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                    {% set typeOptions = [
-                      { value: "Package",        label: "Package" },
-                      { value: "ELISA",          label: "ELISA" },
-                      { value: "Histopathology", label: "Histopathology" },
-                      { value: "PME",            label: "Post mortem" },
-                      { value: "RSA Package",    label: "RSA Package" }
-                    ] %}
-                    {% for opt in typeOptions %}
-                      <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input"
-                          id="type-{{ loop.index }}"
-                          name="type" type="checkbox" value="{{ opt.value }}"
-                          {% if query.type and opt.value in query.type %}checked{% endif %}>
-                        <label class="govuk-label govuk-checkboxes__label"
-                          for="type-{{ loop.index }}">{{ opt.label }}</label>
-                      </div>
-                    {% endfor %}
-                  </div>
-                </fieldset>
+                <label class="govuk-label govuk-label--s" for="category">Tests suitable for various animal species</label>
+                <select class="govuk-select" id="category" name="category">
+                  <option value="">All categories</option>
+                  {% set categoryOptions = [
+                    "Abortion / Stillbirth", "Avian Serology", "Avian Virology",
+                    "Bacteriology & Parasitology", "Cattle Packages", "Cattle Serology",
+                    "Cattle Virology", "Dermatology", "Equine Serology", "Equine Virology",
+                    "Feed & Meat Tests", "Histopathology", "Microbiology",
+                    "Milk Antibody Tests", "Miscellaneous Tests", "Other Avian Tests",
+                    "Other Cattle Tests", "Other Equine Tests", "Other Milk Tests",
+                    "Other Pig Tests", "Other Sheep / Goat Tests", "Other Species Serology",
+                    "Other Species Virology", "Parasitology", "Pig Packages", "Pig Serology",
+                    "Pig Virology", "Post Mortem Examinations", "Sheep / Goat Packages",
+                    "Sheep / Goat Serology", "Sheep / Goat Virology"
+                  ] %}
+                  {% for opt in categoryOptions %}
+                    <option value="{{ opt }}" {% if query.category == opt %}selected{% endif %}>{{ opt }}</option>
+                  {% endfor %}
+                </select>
               </div>
             </div>
 

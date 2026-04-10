@@ -228,7 +228,6 @@ const speciesLabels = {
   Mammals: 'Mammals', Other: 'Other', Pheasant: 'Pheasant', Pig: 'Pig',
   Rabbit: 'Rabbit', Ruminants: 'Ruminants', Sheep: 'Sheep', Turkey: 'Turkey'
 }
-const typeLabels = { Package: 'Package', ELISA: 'ELISA', Histopathology: 'Histopathology', PME: 'Post mortem', 'RSA Package': 'RSA Package' }
 
 // Builds a /?key=val&... URL from a query object, stripping _unchecked sentinels
 function buildUrl (params) {
@@ -258,11 +257,14 @@ function removeFilterUrl (query, key, valueToRemove) {
   return buildUrl(updated)
 }
 
-// Builds the selectedFilters array passed to the template for tag display
+// Builds the selectedFilters array passed to the template for the active filter tags display.
+// Each group represents one active filter with a label and a URL to remove it.
+// Species, type and category are single-value selects; age remains a multi-checkbox.
 function buildSelectedFilters (query) {
-  const { search, species, age, type } = query
+  const { search, species, type, category } = query
   const groups = []
 
+  // Free-text search term
   if (search && search.trim()) {
     groups.push({
       category: 'Search',
@@ -270,36 +272,27 @@ function buildSelectedFilters (query) {
     })
   }
 
-  const activeSpecies = species ? [].concat(species).filter(s => s !== '_unchecked') : []
-  if (activeSpecies.length) {
+  // Species — single select value
+  if (species && species.trim()) {
     groups.push({
       category: 'Species',
-      items: activeSpecies.map(s => ({
-        label: speciesLabels[s] || s,
-        removeUrl: removeFilterUrl(query, 'species', s)
-      }))
+      items: [{ label: speciesLabels[species] || species, removeUrl: removeFilterUrl(query, 'species') }]
     })
   }
 
-  const activeAge = age ? [].concat(age).filter(a => a !== '_unchecked') : []
-  if (activeAge.length) {
-    groups.push({
-      category: 'Age group',
-      items: activeAge.map(a => ({
-        label: a,
-        removeUrl: removeFilterUrl(query, 'age', a)
-      }))
-    })
-  }
-
-  const activeType = type ? [].concat(type).filter(t => t !== '_unchecked') : []
-  if (activeType.length) {
+  // Test type — single select value (laboratory method e.g. PCR, ELISA)
+  if (type && type.trim()) {
     groups.push({
       category: 'Test type',
-      items: activeType.map(t => ({
-        label: typeLabels[t] || t,
-        removeUrl: removeFilterUrl(query, 'type', t)
-      }))
+      items: [{ label: type, removeUrl: removeFilterUrl(query, 'type') }]
+    })
+  }
+
+  // Category — single select value (investigation type e.g. Abortion / Stillbirth)
+  if (category && category.trim()) {
+    groups.push({
+      category: 'Tests suitable for various animal species',
+      items: [{ label: category, removeUrl: removeFilterUrl(query, 'category') }]
     })
   }
 
@@ -311,12 +304,13 @@ function buildSelectedFilters (query) {
 // =============================================================================
 
 // / — main price list page (index.html), searchable and filterable
-// Supports query params: search, species[], age[], type[]
+// Supports query params: search, species, age[], type, category
 router.get('/', (req, res) => {
   const allTests = getPriceList()
   let tests = allTests
-  const { search, species, age, type } = req.query
+  const { search, species, type, category } = req.query
 
+  // Free-text search — matches test code or description (case-insensitive)
   if (search) {
     const q = search.toLowerCase()
     tests = tests.filter(t =>
@@ -325,31 +319,26 @@ router.get('/', (req, res) => {
     )
   }
 
-  // The GOV.UK Prototype Kit sends '_unchecked' for unselected checkbox groups
-  // to maintain session state. Filter these out before applying any filter.
-  if (species) {
-    const arr = [].concat(species).filter(s => s !== '_unchecked')
-    if (arr.length) {
-      tests = tests.filter(t =>
-        arr.some(s => t.species.toLowerCase().includes(s.toLowerCase()))
-      )
-    }
+  // Species — single select value, matched against the derived species field
+  if (species && species.trim()) {
+    tests = tests.filter(t =>
+      t.species.toLowerCase().includes(species.toLowerCase())
+    )
   }
 
-  if (age) {
-    const arr = [].concat(age).filter(a => a !== '_unchecked')
-    if (arr.length) {
-      tests = tests.filter(t => arr.some(a => t.age.includes(a)))
-    }
+  // Test type — single select, exact match against the test type field (e.g. PCR, ELISA)
+  if (type && type.trim()) {
+    tests = tests.filter(t =>
+      t.testType.toLowerCase() === type.toLowerCase()
+    )
   }
 
-  if (type) {
-    const arr = [].concat(type).filter(tp => tp !== '_unchecked')
-    if (arr.length) {
-      tests = tests.filter(t =>
-        arr.some(tp => t.testType.toLowerCase() === tp.toLowerCase())
-      )
-    }
+  // Category — single select, matched against the comma-separated categories field
+  // (e.g. "Abortion / Stillbirth", "Post Mortem Examinations")
+  if (category && category.trim()) {
+    tests = tests.filter(t =>
+      t.categories.toLowerCase().includes(category.toLowerCase())
+    )
   }
 
   res.render('index', {
