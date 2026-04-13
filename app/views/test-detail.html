@@ -39,7 +39,7 @@
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">Price per test (ex. VAT)</dt>
           <dd class="govuk-summary-list__value">
-            £{{ test.price }}
+            {% if test.price %}£{{ test.price }}{% endif %}
             {# Show 5+ price if it differs from the single price #}
             {% if test.price5plus and test.price5plus !== test.price %}<br><span class="govuk-hint">5+ submissions: £{{ test.price5plus }}</span>{% endif %}
             {# Only show 10+ if it differs from both the single price and the 5+ price — if 5+ and 10+ are the same, 5+ covers both #}

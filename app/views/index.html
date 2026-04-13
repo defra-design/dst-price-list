@@ -95,22 +95,40 @@
                 <select class="govuk-select" id="type" name="type">
                   <option value="">All test types</option>
                   {% set typeOptions = [
-                    "Ab ELISA", "Ag ELISA", "AGIDT", "Bacteriology", "Baermann technique",
-                    "BioRad ELISA", "CFT", "CFT Package", "Composite McMaster", "Culture",
-                    "Culture & ID to sp level", "Culture & microscopy", "Culture & typing",
-                    "Culture / DGGE / PCR", "Disc diffusion", "ELISA", "ELISA (diff.)", "EM",
-                    "FAT", "Flotation method", "Genotyping", "HAIT", "HAIT Package",
-                    "Histopathology", "ID", "ID & serotyping", "IFAT", "LAT", "Liquid culture",
-                    "MAT", "McMaster method", "Micro Filtration Test", "Microbiology",
-                    "Microscopy", "Modified McMaster Method", "NPLA (non comparative)",
-                    "OK serotyping screen", "Package", "PAGE", "PCR", "PCR (real time)",
-                    "PCR / sequencing", "PME", "Parasitology", "Phage typing", "RSA",
-                    "RSA Package", "RT PCR", "RT PCR (real time)", "SAT", "SAT (tube test)",
-                    "SNT", "SNT (24hr)", "Sedimentation method", "Sequencing", "Serotyping",
-                    "Smear and ID", "Stain slide", "Time", "Typing", "VI", "VI (1 passage)",
-                    "VI (2 passages)", "VI (3 passages)", "VI in eggs",
-                    "VI in tissue cult. (2 passages)", "VNT", "Western immunoblotting",
-                    "Worm egg count", "cELISA", "iELISA"
+                    "Not Specified", "Ab ELISA", "Ab IPMA", "Ag ELISA", "AGIDT",
+                    "Antibiotic sensitivity test", "Bacteriology", "Baermann technique",
+                    "Biochem", "Biochem ICPMS", "BioRad ELISA", "BioRad Hybrid Western immunoblot",
+                    "Brain examination", "Breakpoint method", "CATT", "cELISA", "CFT",
+                    "CFT Package", "CIE", "Clinical exam", "Composite McMaster", "Culture",
+                    "Culture and ID", "Culture and ID to sp level", "Culture and microscopy",
+                    "Culture and typing", "Culture / DGGE / PCR", "Delvo test", "Digest method",
+                    "Disc diffusion", "Disinfectant test", "Dot blot", "EC six plate test",
+                    "Electrical conductance", "ELISA", "ELISA (diff.)", "ELISA (indirect)",
+                    "ELISA (non diff.)", "ELISA (titration)", "EM", "Faeces exam", "FAT",
+                    "FAT - per antigen", "FAVN", "Filtration test", "Flotation method",
+                    "Flow Cytometry", "Full typing", "Genotyping", "GLC or biochem",
+                    "Glycoform analysis", "Haematology", "HAIT", "HAIT Package",
+                    "HAIT, AGIDT Package", "Histopathology", "ICPI", "ID", "ID and serotyping",
+                    "iELISA", "IFAT", "In house plate dilutions", "In-vitro larval development test",
+                    "IPX", "IPX single passage", "IVPI", "LAT", "Lateral flow", "Liquid culture",
+                    "MAT", "McMaster method", "MIC - Agar dilution", "MIC - strip test",
+                    "Micro Filtration Test", "Microbiology", "Microscopy", "Microscopy and culture",
+                    "Microtitre plate method", "Microtitre VI", "Modified McMaster Method",
+                    "Mouse inoc.", "MRT", "Neuraminidase inhibition", "NPLA",
+                    "NPLA (comparative)", "NPLA (non comparative)", "OK serotyping screen",
+                    "Package", "Package - per animal", "PAGE", "Parasitology", "PCR",
+                    "PCR (real time)", "PCR (RT-nested)", "PCR / sequencing", "Phage typing",
+                    "PME", "PME + tests at discretion of VLA", "PRNT", "Radiography", "RBT",
+                    "RIA", "RSA", "RSA Package", "RT PCR", "RT PCR (real time)", "RTCIT", "SAT",
+                    "SAT (microtitre)", "SAT (tube test)", "Sedimentation method",
+                    "Sequence tests", "Sequencing", "Sequencing/MAb typing", "Serotyping",
+                    "Serum index test", "Slide Prep", "Smear", "Smear and ID", "SNT",
+                    "SNT (24hr)", "Special stain", "Spoligotyping", "Spot test", "Stain slide",
+                    "Taqman PCR", "TBC", "Time", "Toxin test", "Typing", "VI", "VI (1 passage)",
+                    "VI (2 passages)", "VI (2-3 passages)", "VI (3 passages)", "VI in eggs",
+                    "VI in tissue cult. (2 passages)", "VMAT", "VNT", "Western blot",
+                    "Western immunoblotting", "Western immunoblotting - hybrid", "Worm count",
+                    "Worm egg count", "ZN stain and exam"
                   ] %}
                   {% for opt in typeOptions %}
                     <option value="{{ opt }}" {% if query.type == opt %}selected{% endif %}>{{ opt }}</option>
@@ -125,16 +143,20 @@
                 <select class="govuk-select" id="category" name="category">
                   <option value="">All categories</option>
                   {% set categoryOptions = [
-                    "Abortion / Stillbirth", "Avian Serology", "Avian Virology",
-                    "Bacteriology & Parasitology", "Cattle Packages", "Cattle Serology",
-                    "Cattle Virology", "Dermatology", "Equine Serology", "Equine Virology",
-                    "Feed & Meat Tests", "Histopathology", "Microbiology",
-                    "Milk Antibody Tests", "Miscellaneous Tests", "Other Avian Tests",
-                    "Other Cattle Tests", "Other Equine Tests", "Other Milk Tests",
-                    "Other Pig Tests", "Other Sheep / Goat Tests", "Other Species Serology",
-                    "Other Species Virology", "Parasitology", "Pig Packages", "Pig Serology",
-                    "Pig Virology", "Post Mortem Examinations", "Sheep / Goat Packages",
-                    "Sheep / Goat Serology", "Sheep / Goat Virology"
+                    "Abortion / Stillbirth",
+                    "Biochemistry - Other",
+                    "Biochemistry Profiles",
+                    "Blood Biochemistry",
+                    "Dermatology",
+                    "Feed and Meat Tests",
+                    "Haematology",
+                    "Histopathology",
+                    "Microbiology",
+                    "Milk Antibody Tests",
+                    "Miscellaneous Tests",
+                    "Other Milk Tests",
+                    "Parasitology",
+                    "Post Mortem Examinations"
                   ] %}
                   {% for opt in categoryOptions %}
                     <option value="{{ opt }}" {% if query.category == opt %}selected{% endif %}>{{ opt }}</option>
@@ -240,7 +262,7 @@
                 <td class="govuk-table__cell govuk-table__cell--numeric" role="cell">
                   <div class="govuk-table-heading-wrapper"><span class="table-heading">Price per test (ex. VAT)</span></div>
                   <div>
-                    <span class="govuk-table-span">£{{ test.price }}</span>
+                    <span class="govuk-table-span">{% if test.price %}£{{ test.price }}{% endif %}</span>
                     {# Show 5+ price if it differs from the single price #}
                     {% if test.price5plus and test.price5plus !== test.price %}<br><span class="govuk-body-s govuk-secondary-text-colour">5+: £{{ test.price5plus }}</span>{% endif %}
                     {# Only show 10+ if it differs from both the single price and the 5+ price — if 5+ and 10+ are the same, 5+ covers both #}
