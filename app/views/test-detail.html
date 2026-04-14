@@ -21,10 +21,31 @@
 
     <dl class="govuk-summary-list">
 
+      {% if test.animal %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Animal</dt>
+          <dd class="govuk-summary-list__value">{{ test.animal }}</dd>
+        </div>
+      {% endif %}
+
       {% if test.testType %}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">Test type</dt>
           <dd class="govuk-summary-list__value">{{ test.testType }}</dd>
+        </div>
+      {% endif %}
+
+      {% if test.sampleType %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Sample type</dt>
+          <dd class="govuk-summary-list__value">{{ test.sampleType }}</dd>
+        </div>
+      {% endif %}
+
+      {% if test.sampleQuantity %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Sample quantity</dt>
+          <dd class="govuk-summary-list__value">{{ test.sampleQuantity }}</dd>
         </div>
       {% endif %}
 
@@ -46,27 +67,6 @@
             {% if test.price10plus and test.price10plus !== test.price and test.price10plus !== test.price5plus %}<br><span class="govuk-hint">10+ submissions: £{{ test.price10plus }}</span>{% endif %}
             {% if test.priceOther and test.priceOther !== test.price %}<br><span class="govuk-hint">Other: £{{ test.priceOther }}</span>{% endif %}
           </dd>
-        </div>
-      {% endif %}
-
-      {% if test.animal %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Animal</dt>
-          <dd class="govuk-summary-list__value">{{ test.animal }}</dd>
-        </div>
-      {% endif %}
-
-      {% if test.sampleType %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Sample type</dt>
-          <dd class="govuk-summary-list__value">{{ test.sampleType }}</dd>
-        </div>
-      {% endif %}
-
-      {% if test.sampleQuantity %}
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Sample quantity</dt>
-          <dd class="govuk-summary-list__value">{{ test.sampleQuantity }}</dd>
         </div>
       {% endif %}
 
